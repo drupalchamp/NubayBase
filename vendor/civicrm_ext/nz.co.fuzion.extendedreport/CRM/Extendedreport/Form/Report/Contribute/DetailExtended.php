@@ -35,15 +35,14 @@
 class CRM_Extendedreport_Form_Report_Contribute_DetailExtended extends CRM_Extendedreport_Form_Report_ExtendedReport {
   protected $_addressField = FALSE;
 
-  protected $_emailField = FALSE;
-  protected $_emailFieldHonor = FALSE;
-
   protected $_nameFieldHonor = FALSE;
 
   protected $_summary = NULL;
   protected $_allBatches = NULL;
 
   protected $_softFrom = NULL;
+
+  protected $groupConcatTested = TRUE;
 
   protected $_customGroupExtends = array(
     'Contribution',
@@ -180,28 +179,6 @@ class CRM_Extendedreport_Form_Report_Contribute_DetailExtended extends CRM_Exten
     parent::__construct();
   }
 
-  function select() {
-    $this->_columnHeaders = array();
-    foreach ($this->_columns as $tableName => $table) {
-      if (array_key_exists('fields', $table)) {
-        foreach ($table['fields'] as $fieldName => $field) {
-          if (CRM_Utils_Array::value('required', $field) ||
-            CRM_Utils_Array::value($fieldName, $this->_params['fields'])
-          ) {
-            if ($tableName == 'civicrm_email_honor') {
-              $this->_emailFieldHonor = TRUE;
-            }
-            if ($tableName == 'civicrm_contact_honor') {
-              $this->_nameFieldHonor = TRUE;
-            }
-          }
-        }
-      }
-    }
-
-    parent::select();
-  }
-
   function from($softcredit = FALSE) {
     $this->_from = "
         FROM  civicrm_contact      {$this->_aliases['civicrm_contact']} {$this->_aclFrom}
@@ -230,21 +207,9 @@ class CRM_Extendedreport_Form_Report_Contribute_DetailExtended extends CRM_Exten
                       ON {$this->_aliases['civicrm_contribution_ordinality']}.id = {$this->_aliases['civicrm_contribution']}.id";
     }
 
-    $this->addPhoneFromClause();
-
-    if ($this->_addressField OR (!empty($this->_params['state_province_id_value']) OR !empty($this->_params['country_id_value']))) {
-      $this->_from .= "
-            LEFT JOIN civicrm_address {$this->_aliases['civicrm_address']}
-                   ON {$this->_aliases['civicrm_contact']}.id = {$this->_aliases['civicrm_address']}.contact_id AND
-                      {$this->_aliases['civicrm_address']}.is_primary = 1\n";
-    }
-
-    if ($this->_emailField) {
-      $this->_from .= "
-            LEFT JOIN civicrm_email {$this->_aliases['civicrm_email']}
-                   ON {$this->_aliases['civicrm_contact']}.id = {$this->_aliases['civicrm_email']}.contact_id AND
-                      {$this->_aliases['civicrm_email']}.is_primary = 1\n";
-    }
+    $this->joinPhoneFromContact();
+    $this->joinAddressFromContact();
+    $this->joinEmailFromContact();
 
     // include contribution note
     if (CRM_Utils_Array::value('contribution_note', $this->_params['fields']) ||
@@ -271,8 +236,16 @@ class CRM_Extendedreport_Form_Report_Contribute_DetailExtended extends CRM_Exten
 
   }
 
-  function groupBy() {
-    $this->_groupBy = " GROUP BY {$this->_aliases['civicrm_contact']}.id, {$this->_aliases['civicrm_contribution']}.id ";
+  /**
+   * Store group bys into array - so we can check elsewhere (e.g editable fields) what is grouped.
+   *
+   * Overriden to draw source info from 'metadata' and not rely on it being in 'fields'.
+   */
+  function storeGroupByArray() {
+    $this->_groupByArray = [
+      'civicrm_contact_id' => $this->_aliases['civicrm_contact'] . '.id',
+      'civicrm_contribution_id' => $this->_aliases['civicrm_contribution'] . '.id',
+    ];
   }
 
   function statistics(&$rows) {
