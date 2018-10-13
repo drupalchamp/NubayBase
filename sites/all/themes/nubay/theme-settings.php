@@ -992,25 +992,16 @@ function nubay_superfish_styles_form(&$form, &$form_state) {
 
   if (module_exists('style_library_entity')) {
     $library_options = ['' => '- None -'];
-    $query = new EntityFieldQuery();
-    $results = $query->entityCondition('entity_type', 'style_library_entity')
-      ->propertyCondition('extension_type', 'superfish')
-      ->propertyCondition('enabled', 1)
-      ->execute();
+    $library_options += style_library_entity_get_style_libraries('superfish');
 
-    if (!empty($results['style_library_entity'])) {
-      $style_libraries = entity_load('style_library_entity', array_keys($results['style_library_entity']));
-      foreach ($style_libraries as $style_library) {
-        $library_options[$style_library->slid] = $style_library->name;
-      }
-    }
-
-    $default_library_id = theme_get_setting('nubay_superfish_style_library');
+    $default_library_ids = theme_get_setting('nubay_superfish_style_library');
     try {
-      if (!empty($default_library_id)) {
-        $default_library = entity_load_single('style_library_entity', $default_library_id);
-        if (empty($default_library->enabled)) {
-          $default_library_id = '';
+      if (!empty($default_library_ids)) {
+        foreach ($default_library_ids as $delta => $default_library_id) {
+          $default_library = entity_load_single('style_library_entity', $default_library_id);
+          if (empty($default_library->enabled)) {
+            unset($default_library_ids[$delta]);
+          }
         }
       }
     }
@@ -1021,9 +1012,10 @@ function nubay_superfish_styles_form(&$form, &$form_state) {
     $form['at']['nubaystyles_superfish']['superfish']['nubay_superfish_style_library'] = [
       '#type'        => 'select',
       '#title'       => 'Style Libraries',
-      '#description' => 'Choose a pre-configured style library',
+      '#description' => 'Choose pre-configured style libraries',
       '#options'     => $library_options,
-      '#default_value' => $default_library_id,
+      '#default_value' => $default_library_ids,
+      '#multiple' => TRUE,
     ];
   }
 
@@ -1139,12 +1131,14 @@ function nubay_webform_styles_form(&$form, &$form_state) {
     $library_options = ['' => '- None -'];
     $library_options += style_library_entity_get_style_libraries('webform');
 
-    $default_library_id = theme_get_setting('nubay_webform_style_library');
+    $default_library_ids = theme_get_setting('nubay_webform_style_library');
     try {
-      if (!empty($default_library_id)) {
-        $default_library = entity_load_single('style_library_entity', $default_library_id);
-        if (empty($default_library->enabled)) {
-          $default_library_id = '';
+      if (!empty($default_library_ids)) {
+        foreach ($default_library_ids as $delta => $default_library_id) {
+          $default_library = entity_load_single('style_library_entity', $default_library_id);
+          if (empty($default_library->enabled)) {
+            unset($default_library_ids[$delta]);
+          }
         }
       }
     }
@@ -1155,9 +1149,10 @@ function nubay_webform_styles_form(&$form, &$form_state) {
     $form['at']['nubaystyles_webform']['webform']['nubay_webform_style_library'] = [
       '#type'        => 'select',
       '#title'       => 'Style Libraries',
-      '#description' => 'Choose a pre-configured style library',
+      '#description' => 'Choose pre-configured style libraries',
       '#options'     => $library_options,
-      '#default_value' => $default_library_id,
+      '#default_value' => $default_library_ids,
+      '#multiple' => TRUE,
     ];
   }
 
@@ -1226,12 +1221,14 @@ function nubay_civicrm_styles_form(&$form, &$form_state) {
     $library_options = ['' => '- None -'];
     $library_options += style_library_entity_get_style_libraries('civicrm');
 
-    $default_library_id = theme_get_setting('nubay_civicrm_style_library');
+    $default_library_ids = theme_get_setting('nubay_civicrm_style_library');
     try {
-      if (!empty($default_library_id)) {
-        $default_library = entity_load_single('style_library_entity', $default_library_id);
-        if (empty($default_library->enabled)) {
-          $default_library_id = '';
+      if (!empty($default_library_ids)) {
+        foreach ($default_library_ids as $delta => $default_library_id) {
+          $default_library = entity_load_single('style_library_entity', $default_library_id);
+          if (empty($default_library->enabled)) {
+            unset($default_library_ids[$delta]);
+          }
         }
       }
     }
@@ -1242,9 +1239,10 @@ function nubay_civicrm_styles_form(&$form, &$form_state) {
     $form['at']['nubaystyles_civicrm']['civicrm']['nubay_civicrm_style_library'] = [
       '#type'        => 'select',
       '#title'       => 'Style Libraries',
-      '#description' => 'Choose a pre-configured style library',
+      '#description' => 'Choose pre-configured style libraries',
       '#options'     => $library_options,
-      '#default_value' => $default_library_id,
+      '#default_value' => $default_library_ids,
+      '#multiple' => TRUE,
     ];
   }
 
