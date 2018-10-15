@@ -20,12 +20,14 @@ function nubay_preprocess_page(&$vars) {
     if (module_exists('style_library_entity')) {
       $civicrm_extension_enabled = theme_get_setting('nubay_civicrm_enable');
       if (!empty($civicrm_extension_enabled)) {
-        $style_library_id = theme_get_setting('nubay_civicrm_style_library');
-        if (!empty($style_library_id)) {
+        $style_library_ids = theme_get_setting('nubay_civicrm_style_library');
+        if (!empty($style_library_ids)) {
           try {
-            $style_library = entity_load_single('style_library_entity', $style_library_id);
-            style_library_entity_add_style_library_css_to_theme($style_library);
-            style_library_entity_add_style_library_js_to_theme($style_library);
+            foreach ($style_library_ids as $style_library_id) {
+              $style_library = entity_load_single('style_library_entity', $style_library_id);
+              style_library_entity_add_style_library_css_to_theme($style_library);
+              style_library_entity_add_style_library_js_to_theme($style_library);
+            }
           }
           catch (Exception $e) {
             watchdog('nubay_theme_extension', $e->getMessage());
@@ -57,12 +59,14 @@ function nubay_preprocess_block(&$vars) {
     $superfish_extension_enabled = theme_get_setting('nubay_superfish_enable');
     if (!empty($superfish_extension_enabled)) {
       if (strpos($vars['block_html_id'], 'superfish') !== FALSE) {
-        $style_library_id = theme_get_setting('nubay_superfish_style_library');
-        if (!empty($style_library_id)) {
+        $style_library_ids = theme_get_setting('nubay_superfish_style_library');
+        if (!empty($style_library_ids)) {
           try {
-            $style_library = entity_load_single('style_library_entity', $style_library_id);
-            style_library_entity_add_style_library_css_to_theme($style_library);
-            style_library_entity_add_style_library_js_to_theme($style_library);
+            foreach ($style_library_ids as $style_library_id) {
+              $style_library = entity_load_single('style_library_entity', $style_library_id);
+              style_library_entity_add_style_library_css_to_theme($style_library);
+              style_library_entity_add_style_library_js_to_theme($style_library);
+            }
           }
           catch (Exception $e) {
             watchdog('nubay_theme_extension', $e->getMessage());
@@ -86,12 +90,14 @@ function nubay_form_alter(&$form, &$form_state, $form_id) {
   // add Webform style library css/js to theme
   if (strpos($form_id, 'webform_client_form') === 0) {
     if (module_exists('style_library_entity')) {
-      $style_library_id = theme_get_setting('nubay_webform_style_library');
-      if (!empty($style_library_id)) {
+      $style_library_ids = theme_get_setting('nubay_webform_style_library');
+      if (!empty($style_library_ids)) {
         try {
-          $style_library = entity_load_single('style_library_entity', $style_library_id);
-          style_library_entity_add_style_library_css_to_theme($style_library);
-          style_library_entity_add_style_library_js_to_theme($style_library);
+          foreach ($style_library_ids as $style_library_id) {
+            $style_library = entity_load_single('style_library_entity', $style_library_id);
+            style_library_entity_add_style_library_css_to_theme($style_library);
+            style_library_entity_add_style_library_js_to_theme($style_library);
+          }
         }
         catch (Exception $e) {
           watchdog('nubay_theme_extension', $e->getMessage());
