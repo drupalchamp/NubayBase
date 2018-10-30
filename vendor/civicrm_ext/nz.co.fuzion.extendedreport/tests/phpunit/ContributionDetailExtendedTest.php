@@ -69,15 +69,4 @@ class ContributionDetailExtendedTest extends BaseTestClass implements HeadlessIn
     $this->assertEquals('USD', $rows[0]['civicrm_contribution_currency']);
   }
 
-  /**
-   * @param $params
-   * @return array|int
-   */
-  protected function getRows($params) {
-    $params['options']['metadata'] = array('title', 'label', 'sql');
-    $rows = $this->callAPISuccess('ReportTemplate', 'getrows', $params);
-    $rows = $rows['values'];
-    return $rows;
-  }
-
 }
