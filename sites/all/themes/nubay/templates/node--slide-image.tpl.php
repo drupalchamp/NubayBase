@@ -11,6 +11,11 @@
 		$font_size = '';
 		$title_font_size = '';
 		$font_typeface = '';
+		$link_bg_color = '';
+		$head_font_color = '';
+		$head_font_typeface = '';
+		$link_color = '';
+
 		if(!empty($node_obj->field_text_box_location)){
 		  $box_location = $node_obj->field_text_box_location['und'][0]['value'];
 		}
@@ -32,6 +37,18 @@
 		if(!empty($node_obj->field_title_font_size)){
     $title_font_size = $node_obj->field_title_font_size['und'][0]['value'].'px';
   }
+		if(!empty($node_obj->field_head_font_color)){
+    $head_font_color = $node_obj->field_head_font_color['und'][0]['rgb'];
+  }
+		if(!empty($node_obj->field_link_color)){
+    $link_color = $node_obj->field_link_color['und'][0]['rgb'];
+  }
+		if(!empty($node_obj->field_link_background)){
+    $link_bg_color = $node_obj->field_link_background['und'][0]['rgb'];
+  }
+		if(!empty($node_obj->field_head_font_typefaces)){
+    $head_font_typeface = $node_obj->field_head_font_typefaces['und'][0]['value'];
+  }
 
 		$text_align = $node_obj->field_text_justify['und'][0]['value'];
 ?>
@@ -52,17 +69,17 @@
     ?>
 	 </div>
 		
-		   <div id="position_<?php print $box_location; ?>" class="slideshow_text" style="width:<?php print $box_width; ?>; font-size:<?php print $font_size; ?>; font-family:<?php print $font_typeface; ?>; background:<?php print $box_bg_color; ?>; color:<?php print $text_color; ?>; text-align:<?php print $text_align; ?>;">
+		   <div id="position_<?php print $box_location; ?>" class="slideshow_text" style="width:<?php print $box_width; ?>; background-color:<?php print $box_bg_color; ?>; text-align:<?php print $text_align; ?>;">
        <div class="position">
-							     <div class="slide_title" style="font-size:<?php print $title_font_size; ?>"><?php print $node_obj->title; ?></div>  
-												<div class="slide_text">
+							     <div class="slide_title" style="font-size:<?php print $title_font_size; ?>; color:<?php print $head_font_color; ?>; font-family:<?php print $head_font_typeface; ?>;"><?php print render($content['field_head']); ?></div>  
+												<div class="slide_text" style="font-size:<?php print $font_size; ?>; color:<?php print $text_color; ?>;font-family:<?php print $font_typeface; ?>">
 												<?php 
 										  		if(!empty($node_obj->field_text_box)){
 												    print $node_obj->field_text_box['und'][0]['value'];
               }
 												?>
 												</div>
-												<div class="link_text"><?php print render($content['field_link_text']); ?></div>
+												<div class="link_text" style="color:<?php print $link_color; ?>; background:<?php print $link_bg_color; ?>"><?php print render($content['field_link_text']); ?></div>
 				  	</div>
 					</div>
 </div>
@@ -70,14 +87,14 @@
 <!--Caption text for mobile device-->
 <div class="mobile_image_text_box_caption">
     <div class="slide_title"><h2>
-					<?php   print $node_obj->title;  ?>
+					<?php print render($content['field_head']); ?>
 				<h2></div>  
 				<div class="slide_text">
 						<?php 	if(!empty($node_obj->field_text_box)){
 									 print $node_obj->field_text_box['und'][0]['value'];
        }	?>
 					</div>
-				<div class="link_text"><?php print render($content['field_link_text']); ?></div>
+				<div class="link_text" style="background:<?php print $link_bg_color; ?>; color:<?php print $link_color; ?>"><?php print render($content['field_link_text']); ?></div>
 </div>
 <!--end Caption text-->
 
@@ -92,7 +109,12 @@
 		$font_size = '';
 		$title_font_size = '';
 		$font_typeface = '';
-		if(!empty($node->field_text_box_location)){
+		$link_bg_color = '';
+		$head_font_color = '';
+		$head_font_typeface = '';
+		$link_color = '';
+
+if(!empty($node->field_text_box_location)){
 		  $box_location = $node->field_text_box_location['und'][0]['value'];
 		}
 		if(!empty($node->field_text_box_width)){
@@ -113,7 +135,18 @@
 		if(!empty($node->field_title_font_size)){
     $title_font_size = $node->field_title_font_size['und'][0]['value'].'px';
   }
-
+		if(!empty($node_obj->field_head_font_color)){
+    $head_font_color = $node_obj->field_head_font_color['und'][0]['rgb'];
+  }
+		if(!empty($node_obj->field_link_color)){
+    $link_color = $node_obj->field_link_color['und'][0]['rgb'];
+  }
+		if(!empty($node_obj->field_link_background)){
+    $link_bg_color = $node_obj->field_link_background['und'][0]['rgb'];
+  }
+		if(!empty($node_obj->field_head_font_typefaces)){
+    $head_font_typeface = $node_obj->field_head_font_typefaces['und'][0]['value'];
+  }
 		$text_align = $node->field_text_justify['und'][0]['value'];
 ?>
 <div id="slideshow">
@@ -133,17 +166,17 @@
     ?>
 	 </div>
 		
-		   <div id="position_<?php print $box_location; ?>" class="slideshow_text" style="width:<?php print $box_width; ?>; font-size:<?php print $font_size; ?>; font-family:<?php print $font_typeface; ?>; background:<?php print $box_bg_color; ?>; color:<?php print $text_color; ?>; text-align:<?php print $text_align; ?>;">
+		   <div id="position_<?php print $box_location; ?>" class="slideshow_text" style="width:<?php print $box_width; ?>; background:<?php print $box_bg_color; ?>; text-align:<?php print $text_align; ?>;">
        <div class="position">
-							     <div class="slide_title" style="font-size:<?php print $title_font_size; ?>"><?php print $node->title; ?></div>  
-												<div class="slide_text">
+							     <div class="slide_title" style="font-size:<?php print $title_font_size; ?>; font-family:<?php print $head_font_typeface; ?>; color:<?php print $head_font_color; ?>"><?php print render($content['field_head']); ?></div>  
+												<div class="slide_text"  style="font-size:<?php print $font_size; ?>; font-family:<?php print $font_typeface; ?>; color:<?php print $text_color; ?>">
 												<?php 
 										  		if(!empty($node->field_text_box)){
 												    print $node->field_text_box['und'][0]['value'];
               }
 												?>
 												</div>
-												<div class="link_text"><?php print render($content['field_link_text']); ?></div>
+												<div class="link_text" style="color:<?php print $link_color; ?>; background: <?php print $link_bg_color; ?> ><?php print render($content['field_link_text']); ?></div>
 				  	</div>
 					</div>
 
