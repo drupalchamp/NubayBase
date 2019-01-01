@@ -55,7 +55,7 @@ class CRM_Civirules_Utils_Upgrader {
         'name' => 'add_contact_group',
       ),
       'CRM_CivirulesActions_GroupContact_Remove' => array(
-        'label' => 'Remove Contact to a Group',
+        'label' => 'Remove Contact from a Group',
         'name' => 'remove_contact_group',
       ),
       'CRM_CivirulesActions_Tag_Add' => array(
@@ -311,11 +311,11 @@ class CRM_Civirules_Utils_Upgrader {
         'label' => 'Participant Status is (not) one of',
         'name' => 'participant_status',
       ),
-      'CRM_CivirulesCondition_Activity_ActivityIsFuture' => array(
+      'CRM_CivirulesConditions_Activity_ActivityIsFuture' => array(
         'label' => 'Activity Date in the Future',
         'name' => 'activity_is_future_date',
       ),
-      'CRM_CivirulesCondition_Activity_ActivityIsPast' => array(
+      'CRM_CivirulesConditions_Activity_ActivityIsPast' => array(
         'label' => 'Activity Date in the Past',
         'name' => 'activity_is_past_date',
       ),
