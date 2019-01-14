@@ -107,9 +107,12 @@ top: auto;
 }
 #slideshow .link_text a{
   color: inherit;
-padding: 2px 6px;
-  border:1px solid #fff;
+    background: inherit;
+padding: 10px 10px;
+  border:0px solid #fff;
   font-weight:bold;
+    text-align: inherit;
+    border-radius: 7px;
 }
 #slideshow .link_text a:hover{
   text-decoration:none;
