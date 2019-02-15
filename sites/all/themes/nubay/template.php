@@ -139,25 +139,3 @@ function nubay_preprocess_html(&$vars) {
     }
   }
 }
-
-/**
- * Implements theme_css_alter().
- *
- * @param $vars
- */
-function nubay_css_alter(&$css) {
-  if (module_exists('style_library_entity')) {
-    $superfish_extension_enabled = theme_get_setting('nubay_superfish_enable');
-    if (!empty($superfish_extension_enabled)) {
-      $style_library_ids = theme_get_setting('nubay_superfish_style_library');
-      if (!empty($style_library_ids)) {
-        foreach($css as $key => $value){
-          if(strpos($key, 'css/superfish-menu.css') !== FALSE){
-	        $exclude[$key] = FALSE;
-	      }
-        }
-        $css = array_diff_key($css, $exclude);
-	  }
-	}
-  }
-}
