@@ -1069,7 +1069,6 @@ function nubay_superfish_styles_form(&$form, &$form_state) {
 function nubay_superfish_styles_theme_settings_submit($form, $form_state) {
   // Set form_state values into one variable
   $values = $form_state['values'];
-
   // Get the active theme name, $theme_key will return the admin theme
   $theme_name = $form_state['build_info']['args'][0];
 
@@ -1077,10 +1076,51 @@ function nubay_superfish_styles_theme_settings_submit($form, $form_state) {
   $styles_data = [];
 
   // Build form elements for each region
+  nubay_superfish_styles_generate_font_data($values, $styles_data);
   nubay_superfish_styles_generate_style_data($values, $styles_data);
   nubay_custom_extensions_generate_css_files_from_styles_data($theme_name, 'superfish-styles', $styles_data);
 }
+/**
+ * Utility function to generate styles for Superfish Menu Font extension
+ *
+ * @param $values
+ * @param $styles_data
+ */
+function nubay_superfish_styles_generate_font_data($values, &$styles_data) {
+  //adding font for menu
+  $font_type = $values['main_menu_font_type'];
+  $font_value = $values['main_menu_font'];
+  $font_size =$values['main_menu_font_size'];
 
+  if ($font_type === '') {
+    // Get a list of websafe fonts
+    $websafe_fonts = websafe_fonts_list('mm');
+    // Loop over the websafe fonts list and get a match
+    foreach ($websafe_fonts as $k => $v) {
+      if ($k == $font_value) {
+        $font_family = $v;
+      }
+    }
+    $font_values['font_family'] = $font_family.' !important';
+    $font_values['font_size']   = $font_size.' !important';
+    $styles_data[] = at_build_font_families('mm', '.sf-menu.sf-style-none li a', $font_values);
+  }
+  // Custom Font stacks (user entered data)
+  if ($font_type === 'cfs') {
+    $font_values['font_family'] = drupal_strip_dangerous_protocols($font_value); // sanitize user entered data
+    $font_values['font_size']   = $font_size;
+    // Add styles to the array for printing into the stylsheet
+    $styles_data[] = at_build_font_families('mm', '.sf-menu.sf-style-none li a', $font_values);
+  }
+  // Google Fonts (user entered data)
+  if ($font_type === 'gwf') {
+    $font_value = "'" . $font_value . "'";
+    $font_values['font_family'] = filter_xss_admin($font_value); // sanitize user entered data
+    $font_values['font_size']   = $font_size;
+    // Add styles to the array for printing into the stylsheet
+    $styles_data[] = at_build_font_families('mm', '.sf-menu.sf-style-none li a', $font_values);
+  }
+}
 /**
  * Utility function to generate styles for Superfish Menu styling extension
  *
