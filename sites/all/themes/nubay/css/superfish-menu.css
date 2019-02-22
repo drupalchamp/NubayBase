@@ -1,13 +1,3 @@
-@font-face {
-  font-family: 'ProximaNovaExCn-Light';
-  src: url('fonts/ProximaNovaExCn-Light.eot');
-  src: url('fonts/ProximaNovaExCn-Light.eot?#iefix') format('embedded-opentype'),
-       url('fonts/ProximaNovaExCn-Light.svg#ProximaNovaExCn-Light') format('svg'),
-       url('fonts/ProximaNovaExCn-Light.ttf') format('truetype'),
-       url('fonts/ProximaNovaExCn-Light.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 /**
   * Superfish Menu Design
   */
