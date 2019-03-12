@@ -1,8 +1,6 @@
 
 <?php if ($page == 0): ?>
   <!--Caption node teaser-->
-
-
   <?php
 	$canvas_css = '';
 	$canvas_back_color_css = '';
@@ -29,20 +27,19 @@
 	}
 
     if(!empty($node->field_upload_background_image)&& in_array('2',$background_options)){
-      $canvas_back_img_css .= 'background-size: 100% 100%;background-image:url('.file_create_url($node->field_upload_background_image['und'][0]['uri']).'); background-repeat:no-repeat;';
+      $canvas_back_img_css .= 'background-size: cover;background-image:url('.file_create_url($node->field_upload_background_image['und'][0]['uri']).'); background-repeat:no-repeat;';
     }else{
    	  $canvas_back_img_css .= ' background-image:none; ';
 	}
 
-	/////////////border of an image
-	if(!empty($node->field_image_border_top_bottom)){ 
-	  $top_val = $node->field_image_border_top_bottom['und'][0]['value'];
-      $canvas_css .= 'border-top:'.$top_val.'px solid; border-bottom:'.$top_val.'px solid; ';
+	/////////////margin of an text box within and outside
+	if(!empty($node->field_text_box_margin_top_bottom) || !empty($node->field_text_box_margin_left_right)){ 
+	  $top_val = $node->field_text_box_margin_top_bottom['und'][0]['value'];
+	  $left_val = $node->field_text_box_margin_left_right['und'][0]['value'];
+      $canvas_text .= 'margin:'.$top_val.'px '.$left_val.'px; ';
+      $canvas_text .= 'padding:'.$top_val.'px '.$left_val.'px; ';
 	}
-	if(!empty($node->field_image_border_left_right)){ 
-	  $left_val = $node->field_image_border_left_right['und'][0]['value'];
-      $canvas_css .= ' border-left:'.$left_val.'px solid; border-right:'.$left_val.'px solid; ';
-	}
+
 	if(!empty($node->field_image_corners_radius)){ 
       $canvas_css .= 'overflow:hidden; border-radius:'.$node->field_image_corners_radius['und'][0]['value'].'px; ';
 	}
@@ -118,13 +115,11 @@
   <div id="canvas-<?php print $node->nid; ?>" class="canvas" style="<?php print $canvas_css; ?>">
     <div class="canvas-background-color" style="<?php print $canvas_back_color_css; ?>">
 	  <div class="canvas-background-image" style="<?php print $canvas_back_img_css; ?>">
-	    <div class="canvas-text" style="color:#ffffff; padding:5px;<?php print $canvas_text; ?>"><?php print $field_text_content; ?></div>
+	    <div class="canvas-text" style="color:#ffffff;<?php print $canvas_text; ?>"><?php print $field_text_content; ?></div>
 	  </div>
 	</div>
   </div>
   
-
-
 <?php else: ?>
   <!--Caption node Default-->
 
@@ -154,20 +149,19 @@
 	}
 
     if(!empty($node->field_upload_background_image)&& in_array('2',$background_options)){
-      $canvas_back_img_css .= 'background-size: 100% 100%;background-image:url('.file_create_url($node->field_upload_background_image['und'][0]['uri']).'); background-repeat:no-repeat;';
+      $canvas_back_img_css .= 'background-size: cover;background-image:url('.file_create_url($node->field_upload_background_image['und'][0]['uri']).'); background-repeat:no-repeat;';
     }else{
    	  $canvas_back_img_css .= ' background-image:none; ';
 	}
 
-	/////////////border of an image
-	if(!empty($node->field_image_border_top_bottom)){ 
-	  $top_val = $node->field_image_border_top_bottom['und'][0]['value'];
-      $canvas_css .= 'border-top:'.$top_val.'px solid; border-bottom:'.$top_val.'px solid; ';
+	/////////////margin of an text box within and outside
+	if(!empty($node->field_text_box_margin_top_bottom) || !empty($node->field_text_box_margin_left_right)){ 
+	  $top_val = $node->field_text_box_margin_top_bottom['und'][0]['value'];
+	  $left_val = $node->field_text_box_margin_left_right['und'][0]['value'];
+      $canvas_text .= 'margin:'.$top_val.'px '.$left_val.'px; ';
+      $canvas_text .= 'padding:'.$top_val.'px '.$left_val.'px; ';
 	}
-	if(!empty($node->field_image_border_left_right)){ 
-	  $left_val = $node->field_image_border_left_right['und'][0]['value'];
-      $canvas_css .= ' border-left:'.$left_val.'px solid; border-right:'.$left_val.'px solid; ';
-	}
+
 	if(!empty($node->field_image_corners_radius)){ 
       $canvas_css .= 'overflow:hidden; border-radius:'.$node->field_image_corners_radius['und'][0]['value'].'px; ';
 	}
@@ -243,7 +237,7 @@
   <div id="canvas-<?php print $node->nid; ?>" class="canvas" style="<?php print $canvas_css; ?>">
     <div class="canvas-background-color" style="<?php print $canvas_back_color_css; ?>">
 	  <div class="canvas-background-image" style="<?php print $canvas_back_img_css; ?>">
-	    <div class="canvas-text" style="color:#ffffff; padding:5px;<?php print $canvas_text; ?>"><?php print $field_text_content; ?></div>
+	    <div class="canvas-text" style="color:#ffffff;<?php print $canvas_text; ?>"><?php print $field_text_content; ?></div>
 	  </div>
 	</div>
   </div>
