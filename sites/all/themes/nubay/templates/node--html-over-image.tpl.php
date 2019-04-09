@@ -39,8 +39,8 @@
 
 	/////////////margin of an text box within and outside
 	if(!empty($node->field_text_box_margin_top_bottom) || !empty($node->field_text_box_margin_left_right)){ 
-	  $top_val = $node->field_text_box_margin_top_bottom['und'][0]['value'];
-	  $left_val = $node->field_text_box_margin_left_right['und'][0]['value'];
+      $top_val = !empty($node->field_text_box_margin_top_bottom) ? $node->field_text_box_margin_top_bottom['und'][0]['value'] : 0;
+      $left_val = !empty($node->field_text_box_margin_left_right) ? $node->field_text_box_margin_left_right['und'][0]['value'] : 0;
       $canvas_text .= 'margin:'.$top_val.'px '.$left_val.'px; ';
       $canvas_text .= 'padding:'.$top_val.'px '.$left_val.'px; ';
 	}
