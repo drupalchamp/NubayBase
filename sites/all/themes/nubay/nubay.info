@@ -29,7 +29,7 @@
   ; We only need to include two stylesheets - we must include colors.css and at
   ; least one more for our custom CSS.
 
-		
+  stylesheets[all][] = css/smoothDivScroll.css
   stylesheets[all][] = color/colors.css
   stylesheets[all][] = css/nubay.css
     stylesheets[all][] = css/region.css
@@ -71,6 +71,11 @@
   ; following as a guide:
   ;
   ; ie_scripts[lte IE 8] = js/my-script.js
+
+scripts[] = 'js/jquery-ui-1.10.3.custom.min.js'
+scripts[] = 'js/jquery.mousewheel.min.js'
+scripts[] = 'js/jquery.smoothdivscroll-1.3-min.js'
+scripts[] = 'js/simple.js'
   
   
   

@@ -395,3 +395,11 @@ tbody {
 tr td:last-child {
     border-right: 0px;
 }
+
+.view-logo-carousel .view-content .views-row {
+	width: 260px;
+    position: relative;
+    margin: 0px 5px;
+    padding: 0;
+	float: left;
+}
