@@ -111,7 +111,7 @@ if(!empty($elements['#entity']->field_button_s_background_color)){
 if(!empty($elements['#entity']->field_button_s_border_width)){
     $border_width = $elements['#entity']->field_button_s_border_width['und']['0']['value'].'px';
 } else {
-	$border_width = '3px';
+	$border_width = '0px';
 }
 
 if(!empty($elements['#entity']->field_button_border_color)){
@@ -141,7 +141,7 @@ if(!empty($elements['#entity']->field_button_s_h_bg_color)){
 if(!empty($elements['#entity']->field_button_s_hover_text_color)){
     $hover_text_color = $elements['#entity']->field_button_s_hover_text_color['und']['0']['rgb'];
 } else {
-	$hover_text_color = '#fff';
+	$hover_text_color = '#ffffff';
 }
 
 ?>
