@@ -63,7 +63,7 @@ if(!empty($elements['#entity']->field_cover_padding_top_bottom)){
 if(!empty($elements['#entity']->field_cover_padding_left_right)){
     $cover_left_padding = $elements['#entity']->field_cover_padding_left_right['und']['0']['value'].'px';
 } else {
-	$cover_left_padding = '8px';
+	$cover_left_padding = '0px';
 }
 
 if(!empty($elements['#entity']->field_button_s_text_color)){
@@ -129,7 +129,7 @@ if(!empty($elements['#entity']->field_button_border_hover_color)){
 if(!empty($elements['#entity']->field_button_s_border_radius)){
     $border_radius = $elements['#entity']->field_button_s_border_radius['und']['0']['value'].'px';
 } else {
-	$border_radius = '32px';
+	$border_radius = '0px';
 }
 
 if(!empty($elements['#entity']->field_button_s_h_bg_color)){
