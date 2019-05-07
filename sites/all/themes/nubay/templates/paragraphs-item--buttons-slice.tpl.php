@@ -36,6 +36,17 @@
 
 <?php
 
+
+
+if(!empty($elements['#entity']->field_set_columns)){
+    $column = $elements['#entity']->field_set_columns['und'][0]['value'];
+    $width = (int)(100 / $column) - $column.'%';
+    $margin = ($column/2).'%';
+} else {
+    $width = 'auto';
+    $margin = '1.5%';
+}
+
 if(!empty($elements['#entity']->field_button_s_cover_backgroud)){
     if($elements['#entity']->field_button_s_cover_backgroud['und'][0]['value'] == '1'){
         if(!empty($elements['#entity']->field_s_cover_for_backgroud)){
@@ -52,12 +63,10 @@ if(!empty($elements['#entity']->field_button_s_cover_backgroud)){
     }
 }
 
-//print '<pre>';print_r($elements['#entity']->field_button_s_cover_backgroud['und'][0]['value']);print '</pre>';
-
 if(!empty($elements['#entity']->field_cover_padding_top_bottom)){
     $cover_top_padding = $elements['#entity']->field_cover_padding_top_bottom['und']['0']['value'].'px';
 } else {
-	$cover_top_padding = '35px';
+	$cover_top_padding = '0px';
 }
 
 if(!empty($elements['#entity']->field_cover_padding_left_right)){
@@ -69,7 +78,7 @@ if(!empty($elements['#entity']->field_cover_padding_left_right)){
 if(!empty($elements['#entity']->field_button_s_text_color)){
     $text_color = $elements['#entity']->field_button_s_text_color['und']['0']['rgb'];
 } else {
-	$text_color = '#ae163c';
+	$text_color = '';
 }
 
 if(!empty($elements['#entity']->field_button_s_text_font_size)){
@@ -87,25 +96,25 @@ if(!empty($elements['#entity']->field_button_s_text_typeface)){
 if(!empty($elements['#entity']->field_button_padding_left_right)){
     $padding_left = $elements['#entity']->field_button_padding_left_right['und']['0']['value'].'px';
 } else {
-	$padding_left = '10px';
+	$padding_left = '0px';
 }
 
 if(!empty($elements['#entity']->field_button_padding_top_bottom)){
     $padding_top = $elements['#entity']->field_button_padding_top_bottom['und']['0']['value'].'px';
 } else {
-	$padding_top = '10px';
+	$padding_top = '0px';
 }
 
 if(!empty($elements['#entity']->field_button_margin_left_right)){
     $margin_left = $elements['#entity']->field_button_margin_left_right['und']['0']['value'].'px';
 } else {
-	$margin_left = '6px';
+	$margin_left = '0px';
 }
 
 if(!empty($elements['#entity']->field_button_s_background_color)){
     $button_bg_color = $elements['#entity']->field_button_s_background_color['und']['0']['rgb'];
 } else {
-	$button_bg_color = '#ffffff';
+	$button_bg_color = '';
 }
 
 if(!empty($elements['#entity']->field_button_s_border_width)){
@@ -117,13 +126,13 @@ if(!empty($elements['#entity']->field_button_s_border_width)){
 if(!empty($elements['#entity']->field_button_border_color)){
     $border_color = $elements['#entity']->field_button_border_color['und']['0']['rgb'];
 } else {
-	$border_color = '#ffffff';
+	$border_color = '';
 }
 
 if(!empty($elements['#entity']->field_button_border_hover_color)){
     $border_hover_color = $elements['#entity']->field_button_border_hover_color['und']['0']['rgb'];
 } else {
-	$border_hover_color = '#ffffff';
+	$border_hover_color = '';
 }
 
 if(!empty($elements['#entity']->field_button_s_border_radius)){
@@ -135,45 +144,48 @@ if(!empty($elements['#entity']->field_button_s_border_radius)){
 if(!empty($elements['#entity']->field_button_s_h_bg_color)){
     $bg_hover_color = $elements['#entity']->field_button_s_h_bg_color['und']['0']['rgb'];
 } else {
-	$bg_hover_color = '#ae163c';
+	$bg_hover_color = '';
 }
 
 if(!empty($elements['#entity']->field_button_s_hover_text_color)){
     $hover_text_color = $elements['#entity']->field_button_s_hover_text_color['und']['0']['rgb'];
 } else {
-	$hover_text_color = '#ffffff';
+	$hover_text_color = '';
 }
 
 ?>
 
 <style>
 
-#button_slice_wrapper {
+#button_slice_wrapper_<?php print $elements['#entity']->item_id;?> {
+	margin-bottom: 10px;
     padding: <?php print $cover_top_padding;?> <?php print $cover_left_padding;?>;
 	background: <?php print $background; ?>;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
+	overflow: hidden;
 }
 
-#button_slice_wrapper ul,
-#button_slice_wrapper ul li {
+#button_slice_wrapper_<?php print $elements['#entity']->item_id;?> ul,
+#button_slice_wrapper_<?php print $elements['#entity']->item_id;?> ul li {
 	padding: 0px;
 	margin: 0px;
 	list-style: none;
 	list-style-image: none;
 }
 
-#button_slice_wrapper ul li.slice-items {
-	display: inline-block;
-	vertical-align: middle;
-	margin: 0px <?php print $margin_left;?>;
+#button_slice_wrapper_<?php print $elements['#entity']->item_id;?> ul li.slice-items {
+	width: <?php print $width;?>;
+	float: left;
+	margin: <?php print $margin;?>;
 }
 
-#button_slice_wrapper ul li.slice-items a {
+#button_slice_wrapper_<?php print $elements['#entity']->item_id;?> ul li.slice-items a {
 	cursor: pointer;
 	text-decoration: none;
-	display: inline-block;
-	vertical-align: middle;
+	display: block;
+	white-space: pre;
+	text-align: center;
     line-height: 100%;
 	color: <?php print $text_color; ?>;
 	font-size: <?php print $font_size; ?>;
@@ -184,14 +196,14 @@ if(!empty($elements['#entity']->field_button_s_hover_text_color)){
 	background-color: <?php print $button_bg_color; ?>
 }
 
-#button_slice_wrapper ul li.slice-items a:hover {
+#button_slice_wrapper_<?php print $elements['#entity']->item_id;?> ul li.slice-items a:hover {
 	color: <?php print $hover_text_color; ?>;
     border-color: <?php print $border_hover_color;?>;
 	background-color: <?php print $bg_hover_color; ?>
 }
 
 </style>
-<div id="button_slice_wrapper">
+<div id="button_slice_wrapper_<?php print $elements['#entity']->item_id;?>">
     <?php
 		if(!empty($elements['#entity']->field_button_s_text)){
           print '<ul>';  
