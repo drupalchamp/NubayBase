@@ -36,17 +36,6 @@
 
 <?php
 
-
-
-if(!empty($elements['#entity']->field_set_columns)){
-    $column = $elements['#entity']->field_set_columns['und'][0]['value'];
-    $width = (int)(100 / $column) - $column.'%';
-    $margin = ($column/2).'%';
-} else {
-    $width = 'auto';
-    $margin = '1.5%';
-}
-
 if(!empty($elements['#entity']->field_button_s_cover_backgroud)){
     if($elements['#entity']->field_button_s_cover_backgroud['und'][0]['value'] == '1'){
         if(!empty($elements['#entity']->field_s_cover_for_backgroud)){
@@ -67,12 +56,6 @@ if(!empty($elements['#entity']->field_cover_padding_top_bottom)){
     $cover_top_padding = $elements['#entity']->field_cover_padding_top_bottom['und']['0']['value'].'px';
 } else {
 	$cover_top_padding = '0px';
-}
-
-if(!empty($elements['#entity']->field_cover_padding_left_right)){
-    $cover_left_padding = $elements['#entity']->field_cover_padding_left_right['und']['0']['value'].'px';
-} else {
-	$cover_left_padding = '0px';
 }
 
 if(!empty($elements['#entity']->field_button_s_text_color)){
@@ -153,13 +136,40 @@ if(!empty($elements['#entity']->field_button_s_hover_text_color)){
 	$hover_text_color = '';
 }
 
+if(!empty($elements['#entity']->field_button_s_alignment)){
+    $button_alignment = $elements['#entity']->field_button_s_alignment['und']['0']['value'];
+} else {
+	$button_alignment = '';
+}
+
+if(!empty($elements['#entity']->field_button_vertical_alignment)){
+    $button_vertical = $elements['#entity']->field_button_vertical_alignment['und']['0']['value'].'px';
+    $button_vertical_alignment = $button_vertical - '2' .'px';
+} else {
+	$button_vertical_alignment = '-2px';
+}
+
+if(!empty($elements['#entity']->field_button_horizontal_alignmen)){
+    $button_horizontal = $elements['#entity']->field_button_horizontal_alignmen['und']['0']['value'];
+	$button_horizontal_alignment = $button_horizontal - '2' .'px';
+} else {
+	$button_horizontal_alignment = '-2px';
+}
+
+if(!empty($elements['#entity']->field_set_columns)){
+    $column = $elements['#entity']->field_set_columns['und'][0]['value'];
+} else {
+    $column = '1';
+}
+
 ?>
 
 <style>
 
 #button_slice_wrapper_<?php print $elements['#entity']->item_id;?> {
+	text-align: <?php print $button_alignment;?>;
 	margin-bottom: 10px;
-    padding: <?php print $cover_top_padding;?> <?php print $cover_left_padding;?>;
+    padding: <?php print $cover_top_padding;?> 5px;
 	background: <?php print $background; ?>;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -175,9 +185,9 @@ if(!empty($elements['#entity']->field_button_s_hover_text_color)){
 }
 
 #button_slice_wrapper_<?php print $elements['#entity']->item_id;?> ul li.slice-items {
-	width: <?php print $width;?>;
-	float: left;
-	margin: <?php print $margin;?>;
+	display: inline-block;
+	vertical-align: middle;
+	margin: <?php print $button_vertical_alignment; ?> <?php print $button_horizontal_alignment;?>;
 }
 
 #button_slice_wrapper_<?php print $elements['#entity']->item_id;?> ul li.slice-items a {
@@ -203,21 +213,45 @@ if(!empty($elements['#entity']->field_button_s_hover_text_color)){
 }
 
 </style>
+
 <div id="button_slice_wrapper_<?php print $elements['#entity']->item_id;?>">
-    <?php
-		if(!empty($elements['#entity']->field_button_s_text)){
-          print '<ul>';  
-          foreach($elements['#entity']->field_button_s_text['und'] as $results){
-             if(!empty($results['url'])){
-                $url = $results['url'];
-             } else {
-                $url = 'javascript:void(0)';
-             } 
-             //print l($slicebutton['title'], $url, array('fragment' => '', 'external' => TRUE));
-             ?>
-             <li class="slice-items"><a href="<?php print $url;?>"><?php print $results['title'];?></a></li>
-          <?php }
-         print '</ul>';
-       }
-    ?>
+<?php if(!empty($elements['#entity']->field_button_slice)){ ?>
+<div class='row' id="<?php print $column.'-column';?>">
+<ul>
+<?php
+$i = 0;
+foreach($elements['#entity']->field_button_slice['und'] as $results) { 
+   $entities = entity_load('paragraphs_item', array($results['value']));
+   $paragraphs_render = entity_view('paragraphs_item', $entities, 'full');
+   //print drupal_render($paragraphs_render);
+   if(!empty($entities[$results['value']]->field_button_slice_text['und'][0]['url'])){
+	  $url = $entities[$results['value']]->field_button_slice_text['und'][0]['url'];
+   } else {
+	  $url = 'javascript:void(0)';
+   }
+   if(!empty($entities[$results['value']]->field_button_slice_width)){
+	  $width = $entities[$results['value']]->field_button_slice_width['und'][0]['value'].'px';
+   } else {
+	  $width = 'auto';
+   }
+   $title = $entities[$results['value']]->field_button_slice_text['und'][0]['title'];
+
+?>
+<li class="slice-items" style="width:<?php print $width;?>"><a href="<?php print $url; ?>"><?php print $title; ?></a></li>
+<?php
+
+  $i++;
+  if ($column == '1'){
+
+  } else {
+
+  if ($i % $column == 0) {
+     print '</ul></div><div class="row" id="'.$column.'-column"><ul>';
+  }
+  }
+}
+?>
+</ul>
+</div>
+<?php } ?>
 </div>
