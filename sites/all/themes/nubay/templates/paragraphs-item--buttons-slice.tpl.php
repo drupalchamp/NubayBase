@@ -200,7 +200,7 @@ if(!empty($elements['#entity']->field_set_columns)){
 	color: <?php print $text_color; ?>;
 	font-size: <?php print $font_size; ?>;
 	font-family: <?php print $font_family; ?>;
-	padding: <?php print $padding_top;?> <?php print $padding_left;?>;
+	padding: <?php print $padding_top .' '. $padding_left;?>;
 	border: <?php print $border_width;?> solid <?php print $border_color;?>;
     border-radius: <?php print $border_radius; ?>;
 	background-color: <?php print $button_bg_color; ?>
